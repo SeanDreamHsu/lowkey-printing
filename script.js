@@ -1,5 +1,5 @@
 // ========================================
-// STELLAR PRINTS - Interactive Features
+// TEEN DESIGN - Interactive Features
 // ========================================
 
 // Product data stored in localStorage
@@ -330,21 +330,27 @@ function initContactForm() {
     submitBtn.textContent = 'Sending...';
     submitBtn.disabled = true;
 
-    // Submit to Netlify Forms
+    // Submit to Web3Forms
     const formData = new FormData(form);
 
     try {
-      await fetch('/', {
+      const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(formData).toString()
+        body: formData
       });
 
-      submitBtn.textContent = '✓ Message Sent!';
-      submitBtn.style.background = '#22c55e';
-      form.reset();
-      toggleAddressField();
+      const result = await response.json();
+
+      if (result.success) {
+        submitBtn.textContent = '✓ Message Sent!';
+        submitBtn.style.background = '#22c55e';
+        form.reset();
+        toggleAddressField();
+      } else {
+        throw new Error(result.message || 'Submission failed');
+      }
     } catch (error) {
+      console.error('Form submission error:', error);
       submitBtn.textContent = '❌ Error - Try Again';
       submitBtn.style.background = '#ef4444';
     }
