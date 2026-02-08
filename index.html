@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lowkey Printing | Custom 3D Printing</title>
+    <meta name="description"
+        content="High-quality 3D prints made by teen creators. Custom designs, fast turnaround, amazing prices.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="images/logo-l.png">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <span class="logo-icon"><img src="images/logo-l.png" alt="L"
+                        style="height: 1.5em; vertical-align: middle;"></span>
+                <span class="logo-text">Lowkey Printing</span>
+            </a>
+            <div class="nav-links">
+                <a href="#products">Products</a>
+                <a href="#printers">Our Printers</a>
+                <a href="#about">About Us</a>
+                <a href="#contact" class="nav-cta">Contact</a>
+            </div>
+            <button class="admin-btn" id="adminBtn" title="Admin Panel">⚙️</button>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <div class="hero-badge">🚀 Student-Run Business</div>
+            <h1 class="hero-title">
+                Bringing Your <span class="gradient-text">Ideas</span> to Life
+            </h1>
+            <p class="hero-subtitle">
+                Custom 3D prints crafted with care. From figurines to functional parts,
+                we turn your imagination into reality.
+            </p>
+            <div class="hero-buttons">
+                <a href="#products" class="btn btn-primary">Browse Products</a>
+                <a href="#contact" class="btn btn-secondary">Custom Order</a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-number">2</span>
+                    <span class="stat-label">Printers</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">∞</span>
+                    <span class="stat-label">Possibilities</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">💯</span>
+                    <span class="stat-label">Quality</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="floating-shape shape-1"></div>
+            <div class="floating-shape shape-2"></div>
+            <div class="floating-shape shape-3"></div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products" id="products">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Our Collection</span>
+                <h2 class="section-title">Featured Prints</h2>
+                <p class="section-desc">Check out some of our best work. Custom orders always welcome!</p>
+            </div>
+
+            <div class="products-grid">
+                <!-- Product Card 1 -->
+                <article class="product-card">
+                    <div class="product-image">
+                        <div class="product-placeholder">
+                            <span>🎮</span>
+                        </div>
+                        <span class="product-badge">Popular</span>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Gaming Controller Stand</h3>
+                        <p class="product-desc">Keep your controllers organized in style</p>
+                        <div class="product-footer">
+                            <span class="product-price">$12.00</span>
+                            <button class="btn btn-small">Order</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Product Card 2 -->
+                <article class="product-card">
+                    <div class="product-image">
+                        <div class="product-placeholder">
+                            <span>🐉</span>
+                        </div>
+                        <span class="product-badge new">New</span>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Articulated Dragon</h3>
+                        <p class="product-desc">Fully movable joints, multiple colors</p>
+                        <div class="product-footer">
+                            <span class="product-price">$18.00</span>
+                            <button class="btn btn-small">Order</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Product Card 3 -->
+                <article class="product-card">
+                    <div class="product-image">
+                        <div class="product-placeholder">
+                            <span>📱</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Phone Stand</h3>
+                        <p class="product-desc">Adjustable angle, fits all phones</p>
+                        <div class="product-footer">
+                            <span class="product-price">$8.00</span>
+                            <button class="btn btn-small">Order</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Product Card 4 -->
+                <article class="product-card">
+                    <div class="product-image">
+                        <div class="product-placeholder">
+                            <span>🎨</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Pencil Holder</h3>
+                        <p class="product-desc">Geometric design, desk essential</p>
+                        <div class="product-footer">
+                            <span class="product-price">$6.00</span>
+                            <button class="btn btn-small">Order</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Product Card 5 -->
+                <article class="product-card">
+                    <div class="product-image">
+                        <div class="product-placeholder">
+                            <span>🔑</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Custom Keychain</h3>
+                        <p class="product-desc">Personalized with your name or design</p>
+                        <div class="product-footer">
+                            <span class="product-price">$5.00</span>
+                            <button class="btn btn-small">Order</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Product Card 6 - Custom -->
+                <article class="product-card custom-card">
+                    <div class="product-image">
+                        <div class="product-placeholder custom">
+                            <span>✨</span>
+                            <p>Your Idea Here</p>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Custom Print</h3>
+                        <p class="product-desc">Got a design in mind? Let's make it!</p>
+                        <div class="product-footer">
+                            <span class="product-price">Quote</span>
+                            <a href="#contact" class="btn btn-small">Contact Us</a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Printers Section -->
+    <section class="printers" id="printers">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Our Equipment</span>
+                <h2 class="section-title">The Machines</h2>
+                <p class="section-desc">We use top-tier 3D printers for the best quality</p>
+            </div>
+
+            <div class="printers-grid">
+                <div class="printer-card">
+                    <div class="printer-icon" style="display: flex; justify-content: center; align-items: center;"><img
+                            src="images/bambulab-a1-mini.png" alt="Bambu Lab A1 Mini"
+                            style="width: 120px; height: auto; border-radius: 12px;"></div>
+                    <h3 class="printer-name">Bambu Lab A1 Mini</h3>
+                    <p class="printer-owner">Sean's Printer</p>
+                    <ul class="printer-specs">
+                        <li>✓ Super fast printing</li>
+                        <li>✓ Auto bed leveling</li>
+                        <li>✓ High precision</li>
+                        <li>✓ Multi-color capable</li>
+                    </ul>
+                </div>
+
+                <div class="printer-card">
+                    <div class="printer-icon">🖨️</div>
+                    <h3 class="printer-name">Flashforge</h3>
+                    <p class="printer-owner">Friend's Printer</p>
+                    <ul class="printer-specs">
+                        <li>✓ Reliable & proven</li>
+                        <li>✓ Enclosed chamber</li>
+                        <li>✓ Great for detailed prints</li>
+                        <li>✓ Multiple materials</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="materials-info">
+                <h3>Materials We Use</h3>
+                <div class="materials-list">
+                    <span class="material-tag">PLA</span>
+                    <span class="material-tag">PETG</span>
+                    <span class="material-tag">TPU (Flexible)</span>
+                    <span class="material-tag">ABS</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <span class="section-tag">Who We Are</span>
+                    <h2 class="section-title">Just Five Friends Who Love 3D Printing</h2>
+                    <p>
+                        We're middle school students who discovered our passion for 3D printing
+                        and decided to turn it into a small business. Every print is made with
+                        care and attention to detail.
+                    </p>
+                    <p>
+                        We believe in quality over quantity. Each order gets our full attention,
+                        and we're always excited to take on new challenges and custom projects!
+                    </p>
+                    <div class="about-features">
+                        <div class="feature">
+                            <span class="feature-icon">⚡</span>
+                            <span>Fast Turnaround</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">💎</span>
+                            <span>Quality First</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">🤝</span>
+                            <span>Local Pickup</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-visual">
+                    <div class="about-card">
+                        <div class="quote-mark">"</div>
+                        <p>We started this because we love making cool stuff. Now we want to share it with everyone!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Get In Touch</span>
+                <h2 class="section-title">Ready to Order?</h2>
+                <p class="section-desc">Send us a message and we'll get back to you ASAP!</p>
+            </div>
+
+            <div class="contact-content">
+                <form class="contact-form" id="contactForm" name="contact" method="POST" data-netlify="true">
+                    <input type="hidden" name="form-name" value="contact">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" placeholder="your@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">What do you need?</label>
+                        <select id="subject" name="subject" onchange="toggleAddressField()">
+                            <option value="order">Order a Product</option>
+                            <option value="custom">Custom Print Request</option>
+                            <option value="question">General Question</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="addressGroup" style="display: block;">
+                        <label for="address">Delivery/Pickup Address</label>
+                        <input type="text" id="address" name="address"
+                            placeholder="Your address for delivery or pickup">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="4" placeholder="Tell us about your project..."
+                            required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Send Message 🚀</button>
+                </form>
+
+                <div class="contact-info">
+                    <div class="info-card">
+                        <h3>📍 Location</h3>
+                        <p>Local pickup available<br>(Location shared after order)</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>⏰ Response Time</h3>
+                        <p>Usually within 24 hours<br>(We're in school during the day!)</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>💳 Payment</h3>
+                        <p>Cash, Venmo, Zelle<br>Payment on pickup</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="logo-icon"><img src="images/logo-l.png" alt="L"
+                            style="height: 1.5em; vertical-align: middle;"></span>
+                    <span class="logo-text">Lowkey Printing</span>
+                    <p>Made with ❤️ by 5 friends</p>
+                </div>
+                <div class="footer-links">
+                    <a href="#products">Products</a>
+                    <a href="#printers">Printers</a>
+                    <a href="#about">About</a>
+                    <a href="#contact">Contact</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Stellar Prints. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Admin Panel Modal -->
+    <div class="modal-overlay" id="adminModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>🛠️ Admin Panel</h2>
+                <button class="modal-close" id="closeAdmin">&times;</button>
+            </div>
+
+            <div class="modal-tabs">
+                <button class="tab-btn active" data-tab="add">➕ Add Product</button>
+                <button class="tab-btn" data-tab="edit">🖼️ Edit Photos</button>
+            </div>
+
+            <!-- Add Product Tab -->
+            <div class="tab-content active" id="tab-add">
+                <form id="addProductForm">
+                    <div class="form-group">
+                        <label>Product Name</label>
+                        <input type="text" id="newProductName" placeholder="e.g. Dragon Figurine" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <input type="text" id="newProductDesc" placeholder="Brief description">
+                    </div>
+                    <div class="form-group">
+                        <label>Price ($)</label>
+                        <input type="number" id="newProductPrice" min="0" step="0.01" placeholder="10.00" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Emoji Icon</label>
+                        <input type="text" id="newProductEmoji" placeholder="🎮" maxlength="2">
+                    </div>
+                    <div class="form-group">
+                        <label>Image URL (optional)</label>
+                        <input type="url" id="newProductImage" placeholder="https://...">
+                    </div>
+                    <div class="form-group">
+                        <label>Badge</label>
+                        <select id="newProductBadge">
+                            <option value="">None</option>
+                            <option value="popular">Popular</option>
+                            <option value="new">New</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Add Product</button>
+                </form>
+            </div>
+
+            <!-- Edit Photos Tab -->
+            <div class="tab-content" id="tab-edit">
+                <p class="edit-hint">Click on a product below to change its image:</p>
+                <div class="edit-products-list" id="editProductsList">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Upload Modal -->
+    <div class="modal-overlay" id="imageModal">
+        <div class="modal modal-small">
+            <div class="modal-header">
+                <h2>🖼️ Set Product Image</h2>
+                <button class="modal-close" id="closeImageModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="editingProductName"></p>
+                <div class="form-group">
+                    <label>Image URL</label>
+                    <input type="url" id="editImageUrl" placeholder="https://example.com/image.jpg">
+                </div>
+                <div class="form-group">
+                    <label>Or use an emoji</label>
+                    <input type="text" id="editImageEmoji" placeholder="🐉" maxlength="2">
+                </div>
+                <button class="btn btn-primary btn-full" id="saveImageBtn">Save Image</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product | Lowkey Printing</title>
+    <meta name="description" content="View product details and order from Lowkey Printing.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="images/logo-l.png">
+    <style>
+        .product-detail {
+            min-height: 100vh;
+            padding: 120px 0 80px;
+        }
+
+        .product-detail-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 var(--space-lg);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-3xl);
+            align-items: start;
+        }
+
+        @media (max-width: 768px) {
+            .product-detail-container {
+                grid-template-columns: 1fr;
+                gap: var(--space-xl);
+            }
+        }
+
+        .product-detail-image {
+            aspect-ratio: 1;
+            background: var(--bg-card);
+            border-radius: var(--radius-xl);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            overflow: hidden;
+        }
+
+        .product-detail-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-detail-info {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-lg);
+        }
+
+        .product-detail-badge {
+            display: inline-block;
+            padding: var(--space-xs) var(--space-sm);
+            background: var(--accent-gradient);
+            border-radius: var(--radius-full);
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+            text-transform: uppercase;
+            width: fit-content;
+        }
+
+        .product-detail-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .product-detail-desc {
+            font-size: var(--font-size-lg);
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .product-detail-price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-secondary);
+        }
+
+        .product-detail-divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .product-detail-features {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+        }
+
+        .product-detail-features h3 {
+            font-size: var(--font-size-base);
+            font-weight: 600;
+            margin-bottom: var(--space-xs);
+        }
+
+        .product-detail-features li {
+            color: var(--text-secondary);
+            padding-left: var(--space-md);
+            position: relative;
+        }
+
+        .product-detail-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--success);
+        }
+
+        .checkout-section {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .checkout-section h3 {
+            font-size: var(--font-size-lg);
+            margin-bottom: var(--space-md);
+        }
+
+        .payment-options {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-lg);
+        }
+
+        .payment-option {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            padding: var(--space-md);
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all var(--transition-base);
+            border: 2px solid transparent;
+        }
+
+        .payment-option:hover,
+        .payment-option.selected {
+            border-color: var(--accent-primary);
+            background: rgba(139, 0, 0, 0.1);
+        }
+
+        .payment-option-icon {
+            font-size: 1.5rem;
+        }
+
+        .payment-option-info h4 {
+            font-weight: 600;
+        }
+
+        .payment-option-info p {
+            font-size: var(--font-size-sm);
+            color: var(--text-muted);
+        }
+
+        .checkout-note {
+            font-size: var(--font-size-sm);
+            color: var(--text-muted);
+            margin-top: var(--space-md);
+            text-align: center;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin-bottom: var(--space-lg);
+            transition: color var(--transition-base);
+        }
+
+        .back-link:hover {
+            color: var(--text-primary);
+        }
+
+        .product-not-found {
+            text-align: center;
+            padding: var(--space-3xl);
+        }
+
+        .product-not-found h2 {
+            font-size: 2rem;
+            margin-bottom: var(--space-md);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <span class="logo-icon"><img src="images/logo-l.png" alt="L"
+                        style="height: 1.5em; vertical-align: middle;"></span>
+                <span class="logo-text">Lowkey Printing</span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html#products">Products</a>
+                <a href="index.html#printers">Our Printers</a>
+                <a href="index.html#about">About Us</a>
+                <a href="index.html#contact" class="nav-cta">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Product Detail Section -->
+    <section class="product-detail">
+        <div class="product-detail-container" id="productContainer">
+            <!-- Content loaded by JavaScript -->
+            <div class="product-not-found" id="notFound" style="display: none; grid-column: 1 / -1;">
+                <h2>🔍 Product Not Found</h2>
+                <p>Sorry, we couldn't find that product.</p>
+                <a href="index.html#products" class="btn btn-primary" style="margin-top: var(--space-lg);">Browse All
+                    Products</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="logo-icon"><img src="images/logo-l.png" alt="L"
+                            style="height: 1.5em; vertical-align: middle;"></span>
+                    <span class="logo-text">Lowkey Printing</span>
+                    <p>Made with ❤️ by 5 friends</p>
+                </div>
+                <div class="footer-links">
+                    <a href="index.html#products">Products</a>
+                    <a href="index.html#printers">Printers</a>
+                    <a href="index.html#about">About</a>
+                    <a href="index.html#contact">Contact</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Lowkey Printing. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Get product ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = parseInt(urlParams.get('id'));
+
+        // Shipping cost
+        const SHIPPING_COST = 5.00;
+
+        // Load products from localStorage
+        const products = JSON.parse(localStorage.getItem('lowkeyProducts')) || [
+            { id: 1, name: 'Gaming Controller Stand', desc: 'Keep your controllers organized in style', price: 12, emoji: '🎮', image: '', badge: 'popular' },
+            { id: 2, name: 'Articulated Dragon', desc: 'Fully movable joints, multiple colors', price: 18, emoji: '🐉', image: '', badge: 'new' },
+            { id: 3, name: 'Phone Stand', desc: 'Adjustable angle, fits all phones', price: 8, emoji: '📱', image: '', badge: '' },
+            { id: 4, name: 'Pencil Holder', desc: 'Geometric design, desk essential', price: 6, emoji: '🎨', image: '', badge: '' },
+            { id: 5, name: 'Custom Keychain', desc: 'Personalized with your name or design', price: 5, emoji: '🔑', image: '', badge: '' }
+        ];
+
+        const product = products.find(p => p.id === productId);
+        const container = document.getElementById('productContainer');
+        const notFound = document.getElementById('notFound');
+
+        let selectedDelivery = 'pickup';
+        let currentTotal = product ? product.price : 0;
+
+        if (product) {
+            document.title = `${product.name} | Lowkey Printing`;
+
+            const imageHtml = product.image
+                ? `<img src="${product.image}" alt="${product.name}">`
+                : product.emoji || '📦';
+
+            const badgeHtml = product.badge
+                ? `<span class="product-detail-badge">${product.badge}</span>`
+                : '';
+
+            container.innerHTML = `
+                <div class="product-detail-left">
+                    <a href="index.html#products" class="back-link">← Back to Products</a>
+                    <div class="product-detail-image">${imageHtml}</div>
+                </div>
+                <div class="product-detail-info">
+                    ${badgeHtml}
+                    <h1 class="product-detail-title">${product.name}</h1>
+                    <p class="product-detail-desc">${product.desc}</p>
+                    <p class="product-detail-price">$${product.price.toFixed(2)}</p>
+                    
+                    <div class="product-detail-divider"></div>
+                    
+                    <div class="product-detail-features">
+                        <h3>What You Get</h3>
+                        <ul>
+                            <li>High-quality 3D printed item</li>
+                            <li>Made with premium PLA filament</li>
+                            <li>Shipping or local pickup available</li>
+                            <li>Usually ready in 2-3 days</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="checkout-section">
+                        <h3>📦 Delivery Method</h3>
+                        <div class="delivery-options">
+                            <div class="delivery-option selected" onclick="selectDelivery('pickup', ${product.price})">
+                                <span class="delivery-icon">📍</span>
+                                <div class="delivery-info">
+                                    <h4>Local Pickup</h4>
+                                    <p>Free - Pick up in person</p>
+                                </div>
+                                <span class="delivery-price">FREE</span>
+                            </div>
+                            <div class="delivery-option" onclick="selectDelivery('shipping', ${product.price})">
+                                <span class="delivery-icon">🚚</span>
+                                <div class="delivery-info">
+                                    <h4>Shipping</h4>
+                                    <p>Delivered to your address</p>
+                                </div>
+                                <span class="delivery-price">+$${SHIPPING_COST.toFixed(2)}</span>
+                            </div>
+                        </div>
+
+                        <div id="shippingAddress" style="display: none; margin-top: var(--space-md);">
+                            <div class="form-group">
+                                <label for="address">Shipping Address</label>
+                                <input type="text" id="address" placeholder="Full address including city, state, zip">
+                            </div>
+                        </div>
+                        
+                        <div class="product-detail-divider" style="margin: var(--space-md) 0;"></div>
+                        
+                        <h3>💳 Payment Method</h3>
+                        <p style="color: var(--text-secondary); font-size: var(--font-size-sm); margin-bottom: var(--space-md);">
+                            We accept Credit Card, Debit Card, Venmo, Zelle, or Cash
+                        </p>
+                        
+                        <div class="order-summary">
+                            <div class="summary-row">
+                                <span>Product</span>
+                                <span>$${product.price.toFixed(2)}</span>
+                            </div>
+                            <div class="summary-row" id="shippingRow" style="display: none;">
+                                <span>Shipping</span>
+                                <span>$${SHIPPING_COST.toFixed(2)}</span>
+                            </div>
+                            <div class="summary-row total">
+                                <span>Total</span>
+                                <span id="totalPrice">$${product.price.toFixed(2)}</span>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-primary btn-full" id="checkoutBtn" onclick="proceedToCheckout()">
+                            💳 Proceed to Checkout
+                        </button>
+                        
+                        <p class="checkout-note">🔒 Secure payment • Fast processing</p>
+                    </div>
+                </div>
+            `;
+
+            // Add extra styles for new elements
+            const style = document.createElement('style');
+            style.textContent = `
+                .delivery-options {
+                    display: flex;
+                    flex-direction: column;
+                    gap: var(--space-sm);
+                    margin-bottom: var(--space-md);
+                }
+                .delivery-option {
+                    display: flex;
+                    align-items: center;
+                    gap: var(--space-md);
+                    padding: var(--space-md);
+                    background: var(--bg-secondary);
+                    border-radius: var(--radius-md);
+                    cursor: pointer;
+                    transition: all var(--transition-base);
+                    border: 2px solid transparent;
+                }
+                .delivery-option:hover,
+                .delivery-option.selected {
+                    border-color: var(--accent-primary);
+                    background: rgba(139, 0, 0, 0.1);
+                }
+                .delivery-icon {
+                    font-size: 1.5rem;
+                }
+                .delivery-info {
+                    flex: 1;
+                }
+                .delivery-info h4 {
+                    font-weight: 600;
+                }
+                .delivery-info p {
+                    font-size: var(--font-size-sm);
+                    color: var(--text-muted);
+                }
+                .delivery-price {
+                    font-weight: 600;
+                    color: var(--accent-secondary);
+                }
+                .order-summary {
+                    background: var(--bg-secondary);
+                    border-radius: var(--radius-md);
+                    padding: var(--space-md);
+                    margin-bottom: var(--space-md);
+                }
+                .summary-row {
+                    display: flex;
+                    justify-content: space-between;
+                    padding: var(--space-xs) 0;
+                    color: var(--text-secondary);
+                }
+                .summary-row.total {
+                    border-top: 1px solid rgba(255,255,255,0.1);
+                    margin-top: var(--space-sm);
+                    padding-top: var(--space-sm);
+                    font-weight: 700;
+                    font-size: 1.1rem;
+                    color: var(--text-primary);
+                }
+                .form-group {
+                    margin-bottom: var(--space-md);
+                }
+                .form-group label {
+                    display: block;
+                    margin-bottom: var(--space-xs);
+                    font-weight: 500;
+                }
+                .form-group input {
+                    width: 100%;
+                    padding: var(--space-sm) var(--space-md);
+                    background: var(--bg-secondary);
+                    border: 1px solid rgba(255,255,255,0.1);
+                    border-radius: var(--radius-md);
+                    color: var(--text-primary);
+                    font-size: var(--font-size-base);
+                }
+                .form-group input:focus {
+                    outline: none;
+                    border-color: var(--accent-primary);
+                }
+            `;
+            document.head.appendChild(style);
+        } else {
+            notFound.style.display = 'block';
+        }
+
+        function selectDelivery(method, basePrice) {
+            selectedDelivery = method;
+            document.querySelectorAll('.delivery-option').forEach(opt => opt.classList.remove('selected'));
+            event.currentTarget.classList.add('selected');
+
+            const shippingRow = document.getElementById('shippingRow');
+            const shippingAddress = document.getElementById('shippingAddress');
+            const totalPrice = document.getElementById('totalPrice');
+
+            if (method === 'shipping') {
+                shippingRow.style.display = 'flex';
+                shippingAddress.style.display = 'block';
+                currentTotal = basePrice + SHIPPING_COST;
+            } else {
+                shippingRow.style.display = 'none';
+                shippingAddress.style.display = 'none';
+                currentTotal = basePrice;
+            }
+
+            totalPrice.textContent = '$' + currentTotal.toFixed(2);
+        }
+
+        function proceedToCheckout() {
+            const productName = product.name;
+            const address = document.getElementById('address')?.value || '';
+
+            if (selectedDelivery === 'shipping' && !address.trim()) {
+                alert('Please enter your shipping address');
+                return;
+            }
+
+            // Build order message
+            let orderMessage = `Hi! I'd like to order:\n\n`;
+            orderMessage += `📦 Product: ${productName}\n`;
+            orderMessage += `💰 Price: $${product.price.toFixed(2)}\n`;
+            orderMessage += `🚚 Delivery: ${selectedDelivery === 'shipping' ? 'Shipping (+$' + SHIPPING_COST.toFixed(2) + ')' : 'Local Pickup (Free)'}\n`;
+            if (selectedDelivery === 'shipping') {
+                orderMessage += `📍 Address: ${address}\n`;
+            }
+            orderMessage += `\n💳 Total: $${currentTotal.toFixed(2)}\n`;
+            orderMessage += `\nI'd like to pay with: [Credit Card / Debit Card / Venmo / Zelle / Cash]`;
+
+            // Store order info and redirect to contact
+            sessionStorage.setItem('pendingOrder', JSON.stringify({
+                product: productName,
+                price: product.price,
+                delivery: selectedDelivery,
+                shipping: selectedDelivery === 'shipping' ? SHIPPING_COST : 0,
+                address: address,
+                total: currentTotal,
+                message: orderMessage
+            }));
+
+            window.location.href = 'index.html#contact';
+        }
+    </script>
+</body>
+
+</html>
