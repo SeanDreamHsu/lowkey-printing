@@ -61,6 +61,15 @@ function renderProducts() {
         </div>
       </div>
     `;
+
+    // Make whole card clickable
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', (e) => {
+      // Don't trigger if user selected text
+      if (window.getSelection().toString()) return;
+      window.location.href = `product.html?id=${product.id}`;
+    });
+
     grid.appendChild(card);
   });
 
@@ -90,7 +99,7 @@ function renderProducts() {
   }
 
   // Re-attach order button handlers
-  initProductOrderButtons();
+
   saveProducts();
 }
 
@@ -422,20 +431,7 @@ function initScrollAnimations() {
 // ========================================
 // Product Order Buttons
 // ========================================
-function initProductOrderButtons() {
-  document.querySelectorAll('.product-card:not(.custom-card) .btn').forEach(btn => {
-    btn.addEventListener('click', function (e) {
-      e.preventDefault();
-      const card = this.closest('.product-card');
-      const productId = card.dataset.id;
 
-      // Navigate to product detail page
-      if (productId) {
-        window.location.href = `product.html?id=${productId}`;
-      }
-    });
-  });
-}
 
 // ========================================
 // Mobile menu CSS injection
