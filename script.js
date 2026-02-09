@@ -51,8 +51,7 @@ function renderProducts() {
   const grid = document.querySelector('.products-grid');
   if (!grid) return;
 
-  // Clear existing products except the custom card
-  const customCard = grid.querySelector('.custom-card');
+  // Clear grid
   grid.innerHTML = '';
 
   products.forEach(product => {
@@ -94,31 +93,6 @@ function renderProducts() {
 
     grid.appendChild(card);
   });
-
-  // Re-add custom card
-  if (customCard) {
-    grid.appendChild(customCard);
-  } else {
-    const newCustomCard = document.createElement('article');
-    newCustomCard.className = 'product-card custom-card';
-    newCustomCard.innerHTML = `
-      <div class="product-image">
-        <div class="product-placeholder custom">
-          <span>✨</span>
-          <p>Your Idea Here</p>
-        </div>
-      </div>
-      <div class="product-info">
-        <h3 class="product-title">Custom Print</h3>
-        <p class="product-desc">Got a design in mind? Let's make it!</p>
-        <div class="product-footer">
-          <span class="product-price">Quote</span>
-          <a href="#contact" class="btn btn-small">Contact Us</a>
-        </div>
-      </div>
-    `;
-    grid.appendChild(newCustomCard);
-  }
 
   // Re-attach order button handlers
 
