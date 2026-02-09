@@ -282,9 +282,33 @@
         if (product) {
             document.title = `${product.name} | Lowkey Printing`;
 
-            const imageHtml = product.image
-                ? `<img src="${product.image}" alt="${product.name}">`
-                : product.emoji || '📦';
+            let imagesHtml = '';
+
+            if (product.images && product.images.length > 0) {
+                // Multiple images
+                imagesHtml = `
+                    <div class="product-gallery">
+                        <div class="main-image-wrapper">
+                            <img id="mainProductImage" src="${product.images[0]}" alt="${product.name}" class="main-product-img">
+                        </div>
+                        <div class="thumbnail-row">
+                            ${product.images.map((img, i) => `
+                                <div class="thumbnail ${i === 0 ? 'active' : ''}" onclick="changeMainImage('${img}', this)">
+                                    <img src="${img}" alt="Thumbnail ${i + 1}">
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            } else if (product.image) {
+                // Single image fallback
+                imagesHtml = `<img src="${product.image}" alt="${product.name}" class="main-product-img">`;
+            } else {
+                // Emoji fallback
+                imagesHtml = `<div class="emoji-placeholder">${product.emoji || '📦'}</div>`;
+            }
+
+            const imageHtml = imagesHtml; // Keeping variable name consistent for later use
 
             const badgeHtml = product.badge
                 ? `<span class="product-detail-badge">${product.badge}</span>`
@@ -375,6 +399,57 @@
             // Add extra styles for new elements
             const style = document.createElement('style');
             style.textContent = `
+                /* Gallery Styles */
+                .product-gallery {
+                    margin-bottom: var(--space-md);
+                }
+                .main-image-wrapper {
+                    width: 100%;
+                    height: 400px;
+                    background: var(--bg-card);
+                    border-radius: var(--radius-lg);
+                    overflow: hidden;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin-bottom: var(--space-sm);
+                    border: 1px solid rgba(255,255,255,0.1);
+                }
+                .main-product-img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+                .thumbnail-row {
+                    display: flex;
+                    gap: var(--space-sm);
+                    overflow-x: auto;
+                    padding-bottom: var(--space-xs);
+                }
+                .thumbnail {
+                    width: 80px;
+                    height: 80px;
+                    border-radius: var(--radius-md);
+                    overflow: hidden;
+                    cursor: pointer;
+                    border: 2px solid transparent;
+                    flex-shrink: 0;
+                    opacity: 0.7;
+                    transition: all 0.2s;
+                }
+                .thumbnail:hover {
+                    opacity: 1;
+                }
+                .thumbnail.active {
+                    border-color: var(--accent-primary);
+                    opacity: 1;
+                }
+                .thumbnail img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+
                 .delivery-options {
                     display: flex;
                     flex-direction: column;
@@ -515,6 +590,22 @@
             }));
 
             window.location.href = 'index.html#contact';
+        }
+
+        // Gallery Interaction
+        function changeMainImage(src, el) {
+            const mainImg = document.getElementById('mainProductImage');
+            if (mainImg) {
+                // Add fade effect
+                mainImg.style.opacity = '0.5';
+                setTimeout(() => {
+                    mainImg.src = src;
+                    mainImg.style.opacity = '1';
+                }, 150);
+            }
+
+            document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+            el.classList.add('active');
         }
     </script>
 </body>

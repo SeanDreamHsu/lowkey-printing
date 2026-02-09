@@ -43,8 +43,10 @@ function renderProducts() {
     const badgeHtml = product.badge ?
       `<span class="product-badge ${product.badge === 'new' ? 'new' : ''}">${product.badge === 'new' ? 'New' : 'Popular'}</span>` : '';
 
-    const imageHtml = product.image ?
-      `<img src="${product.image}" alt="${product.name}" style="width:100%;height:100%;object-fit:cover;">` :
+    const primaryImage = (product.images && product.images.length > 0) ? product.images[0] : product.image;
+
+    const imageHtml = primaryImage ?
+      `<img src="${primaryImage}" alt="${product.name}" style="width:100%;height:100%;object-fit:cover;">` :
       `<span>${product.emoji || '📦'}</span>`;
 
     card.innerHTML = `
@@ -116,8 +118,8 @@ function initAdminPanel() {
   const adminBtn = document.getElementById('adminBtn');
   const adminModal = document.getElementById('adminModal');
   const closeAdmin = document.getElementById('closeAdmin');
-  const imageModal = document.getElementById('imageModal');
-  const closeImageModal = document.getElementById('closeImageModal');
+  const editProductModal = document.getElementById('editProductModal');
+  const closeEditModal = document.getElementById('closeEditModal');
 
   // Check if already verified
   if (localStorage.getItem('admin_verified') === 'true') {
@@ -149,9 +151,9 @@ function initAdminPanel() {
     adminModal.classList.remove('active');
   });
 
-  // Close image modal
-  closeImageModal?.addEventListener('click', () => {
-    imageModal.classList.remove('active');
+  // Close edit modal
+  closeEditModal?.addEventListener('click', () => {
+    editProductModal.classList.remove('active');
   });
 
   // Close on overlay click
@@ -159,8 +161,8 @@ function initAdminPanel() {
     if (e.target === adminModal) adminModal.classList.remove('active');
   });
 
-  imageModal?.addEventListener('click', (e) => {
-    if (e.target === imageModal) imageModal.classList.remove('active');
+  editProductModal?.addEventListener('click', (e) => {
+    if (e.target === editProductModal) editProductModal.classList.remove('active');
   });
 
   // Tab switching
@@ -185,11 +187,13 @@ function initAdminPanel() {
       price: parseFloat(document.getElementById('newProductPrice').value),
       emoji: document.getElementById('newProductEmoji').value || '📦',
       image: document.getElementById('newProductImage').value || '',
+      images: document.getElementById('newProductImage').value ? [document.getElementById('newProductImage').value] : [],
       badge: document.getElementById('newProductBadge').value
     };
 
     products.push(newProduct);
     renderProducts();
+    saveProducts();
     e.target.reset();
 
     // Show success feedback
@@ -202,29 +206,48 @@ function initAdminPanel() {
     }, 2000);
   });
 
-  // Save image button
-  document.getElementById('saveImageBtn')?.addEventListener('click', () => {
+  // Edit Product Form Submit
+  document.getElementById('editProductForm')?.addEventListener('submit', (e) => {
+    e.preventDefault();
     if (editingProductId === null) return;
 
-    const imageUrl = document.getElementById('editImageUrl').value;
-    const emoji = document.getElementById('editImageEmoji').value;
+    const name = document.getElementById('editProductName').value;
+    const desc = document.getElementById('editProductDesc').value;
+    const price = parseFloat(document.getElementById('editProductPrice').value);
+    const emoji = document.getElementById('editProductEmoji').value;
+    const badge = document.getElementById('editProductBadge').value;
+    const imagesText = document.getElementById('editProductImages').value;
+
+    // Process images
+    const images = imagesText.split('\n').map(url => url.trim()).filter(url => url.length > 0);
 
     const product = products.find(p => p.id === editingProductId);
     if (product) {
-      if (imageUrl) {
-        product.image = imageUrl;
-        product.emoji = '';
-      } else if (emoji) {
-        product.emoji = emoji;
-        product.image = '';
-      }
+      product.name = name;
+      product.desc = desc;
+      product.price = price;
+      product.emoji = emoji;
+      product.badge = badge;
+      product.images = images;
+      product.image = images.length > 0 ? images[0] : ''; // Fallback for backward compatibility
+
       renderProducts();
       populateEditList();
+      saveProducts();
     }
 
-    imageModal.classList.remove('active');
-    document.getElementById('editImageUrl').value = '';
-    document.getElementById('editImageEmoji').value = '';
+    editProductModal.classList.remove('active');
+  });
+
+  // Delete Product Button
+  document.getElementById('deleteProductBtn')?.addEventListener('click', () => {
+    if (editingProductId === null || !confirm('Are you sure you want to delete this product?')) return;
+
+    products = products.filter(p => p.id !== editingProductId);
+    renderProducts();
+    populateEditList();
+    saveProducts();
+    editProductModal.classList.remove('active');
   });
 }
 
@@ -235,7 +258,7 @@ function populateEditList() {
   list.innerHTML = products.map(p => `
     <div class="edit-product-item" data-id="${p.id}">
       <div class="edit-product-thumb">
-        ${p.image ? `<img src="${p.image}" alt="${p.name}">` : p.emoji || '📦'}
+        ${(p.images && p.images.length > 0) ? `<img src="${p.images[0]}" alt="${p.name}">` : (p.image ? `<img src="${p.image}" alt="${p.name}">` : p.emoji || '📦')}
       </div>
       <div class="edit-product-info">
         <h4>${p.name}</h4>
@@ -251,10 +274,18 @@ function populateEditList() {
       editingProductId = parseInt(item.dataset.id);
       const product = products.find(p => p.id === editingProductId);
       if (product) {
-        document.getElementById('editingProductName').textContent = `Editing: ${product.name}`;
-        document.getElementById('editImageUrl').value = product.image || '';
-        document.getElementById('editImageEmoji').value = product.emoji || '';
-        document.getElementById('imageModal').classList.add('active');
+        document.getElementById('editProductId').value = product.id;
+        document.getElementById('editProductName').value = product.name;
+        document.getElementById('editProductDesc').value = product.desc;
+        document.getElementById('editProductPrice').value = product.price;
+        document.getElementById('editProductEmoji').value = product.emoji || '';
+        document.getElementById('editProductBadge').value = product.badge || '';
+
+        // Populate images textarea
+        const imagesList = (product.images && product.images.length > 0) ? product.images : (product.image ? [product.image] : []);
+        document.getElementById('editProductImages').value = imagesList.join('\n');
+
+        document.getElementById('editProductModal').classList.add('active');
       }
     });
   });
