@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmed | Lowkey Prints</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        .success-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: var(--space-xl);
+            background: radial-gradient(circle at top right, rgba(139, 0, 0, 0.1), transparent 40%),
+                radial-gradient(circle at bottom left, rgba(0, 0, 50, 0.2), transparent 40%);
+        }
+
+        .success-card {
+            background: var(--bg-card);
+            padding: var(--space-xl);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            margin-bottom: var(--space-md);
+            animation: bounce 1s ease infinite;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        h1 {
+            color: var(--text-primary);
+            margin-bottom: var(--space-sm);
+        }
+
+        p {
+            color: var(--text-secondary);
+            margin-bottom: var(--space-lg);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="success-container">
+        <div class="success-card">
+            <div class="success-icon">🎉</div>
+            <h1>Thank You for Your Order!</h1>
+            <p>Your payment was successful. We've sent a receipt to your email.</p>
+            <p>We'll start working on your 3D print right away!</p>
+            <a href="index.html" class="btn btn-primary">Back to Home</a>
+        </div>
+    </div>
+</body>
+
+</html>

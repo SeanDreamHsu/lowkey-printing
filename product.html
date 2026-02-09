@@ -558,38 +558,64 @@
             totalPrice.textContent = '$' + currentTotal.toFixed(2);
         }
 
-        function proceedToCheckout() {
-            const productName = product.name;
-            const address = document.getElementById('address')?.value || '';
+        async function proceedToCheckout() {
+            const btn = document.getElementById('checkoutBtn');
+            const originalText = btn.innerHTML;
 
+            // Validate address if shipping
+            const address = document.getElementById('address')?.value || '';
             if (selectedDelivery === 'shipping' && !address.trim()) {
-                alert('Please enter your shipping address');
+                alert('Please enter your shipping address.');
                 return;
             }
 
-            // Build order message
-            let orderMessage = `Hi! I'd like to order:\n\n`;
-            orderMessage += `📦 Product: ${productName}\n`;
-            orderMessage += `💰 Price: $${product.price.toFixed(2)}\n`;
-            orderMessage += `🚚 Delivery: ${selectedDelivery === 'shipping' ? 'Shipping (+$' + SHIPPING_COST.toFixed(2) + ')' : 'Local Pickup (Free)'}\n`;
-            if (selectedDelivery === 'shipping') {
-                orderMessage += `📍 Address: ${address}\n`;
+            btn.disabled = true;
+            btn.innerHTML = '⏳ Processing...';
+
+            try {
+                const finalPrice = selectedDelivery === 'shipping' ? (product.price + SHIPPING_COST) : product.price;
+                const productName = product.name + (selectedDelivery === 'shipping' ? ' (Shipped)' : ' (Pickup)');
+
+                // Prepare absolute image URL for Stripe
+                const primaryImage = (product.images && product.images.length > 0) ? product.images[0] : (product.image || '');
+                const baseUrl = window.location.origin;
+                const imageUrl = primaryImage ? (primaryImage.startsWith('http') ? primaryImage : `${baseUrl}/${primaryImage}`) : '';
+
+                const response = await fetch('/api/create-checkout-session', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        product: {
+                            name: productName,
+                            desc: product.desc,
+                            images: imageUrl ? [imageUrl] : [],
+                            id: product.id
+                        },
+                        price: finalPrice,
+                        quantity: 1
+                    }),
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || 'Payment initiation failed');
+                }
+
+                const session = await response.json();
+
+                if (session.url) {
+                    window.location.href = session.url;
+                } else {
+                    throw new Error('No checkout URL received');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert(`Payment Error: ${error.message}. Please try again.`);
+                btn.disabled = false;
+                btn.innerHTML = originalText;
             }
-            orderMessage += `\n💳 Total: $${currentTotal.toFixed(2)}\n`;
-            orderMessage += `\nI'd like to pay with: [Credit Card / Debit Card / Venmo / Zelle / Cash]`;
-
-            // Store order info and redirect to contact
-            sessionStorage.setItem('pendingOrder', JSON.stringify({
-                product: productName,
-                price: product.price,
-                delivery: selectedDelivery,
-                shipping: selectedDelivery === 'shipping' ? SHIPPING_COST : 0,
-                address: address,
-                total: currentTotal,
-                message: orderMessage
-            }));
-
-            window.location.href = 'index.html#contact';
         }
 
         // Gallery Interaction

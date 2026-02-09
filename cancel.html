@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Canceled | Lowkey Prints</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        .cancel-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: var(--space-xl);
+            background: var(--bg-primary);
+        }
+        .cancel-card {
+            background: var(--bg-card);
+            padding: var(--space-xl);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 500px;
+            width: 100%;
+        }
+        .cancel-icon {
+            font-size: 4rem;
+            margin-bottom: var(--space-md);
+            color: #ef4444;
+        }
+        h1 {
+            color: var(--text-primary);
+            margin-bottom: var(--space-sm);
+        }
+        p {
+            color: var(--text-secondary);
+            margin-bottom: var(--space-lg);
+        }
+    </style>
+</head>
+<body>
+    <div class="cancel-container">
+        <div class="cancel-card">
+            <div class="cancel-icon">❌</div>
+            <h1>Payment Canceled</h1>
+            <p>Your payment process was canceled. No charges were made.</p>
+            <a href="index.html" class="btn btn-outline" style="width: 100%; text-align: center;">Back to Shop</a>
+        </div>
+    </div>
+</body>
+</html>
