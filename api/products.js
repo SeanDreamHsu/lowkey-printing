@@ -1,9 +1,11 @@
-const { kv } = require('@vercel/kv');
+const { Redis } = require('@upstash/redis');
+
+const redis = Redis.fromEnv();
 
 module.exports = async (req, res) => {
   if (req.method === 'GET') {
     try {
-      const products = await kv.get('lowkey_products');
+      const products = await redis.get('lowkey_products');
       res.status(200).json(products || []);
     } catch (error) {
       console.error(error);
@@ -12,7 +14,7 @@ module.exports = async (req, res) => {
   } else if (req.method === 'POST') {
     try {
       const products = req.body;
-      await kv.set('lowkey_products', products);
+      await redis.set('lowkey_products', products);
       res.status(200).json({ success: true });
     } catch (error) {
       console.error(error);

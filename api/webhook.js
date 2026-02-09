@@ -1,5 +1,7 @@
-const { kv } = require('@vercel/kv');
+const { Redis } = require('@upstash/redis');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+
+const redis = Redis.fromEnv();
 
 // We need to disable body parsing for this route because we need the raw body
 // for signature verification.
@@ -56,8 +58,7 @@ module.exports = async (req, res) => {
 
             try {
                 // Save order to KV
-                // We use a list to store orders. Assuming 'lowkey_orders' is a list.
-                await kv.lpush('lowkey_orders', order);
+                await redis.lpush('lowkey_orders', order);
                 console.log('Order saved to KV');
             } catch (kvError) {
                 console.error('Error saving order to KV:', kvError);
