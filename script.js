@@ -110,22 +110,27 @@ function initAdminPanel() {
   const imageModal = document.getElementById('imageModal');
   const closeImageModal = document.getElementById('closeImageModal');
 
-  let isAuthenticated = sessionStorage.getItem('adminAuth') === 'true';
+  // Check if already verified
+  if (localStorage.getItem('admin_verified') === 'true') {
+    if (adminBtn) adminBtn.style.display = 'block';
+  }
 
-  // Open admin panel with password protection
-  adminBtn?.addEventListener('click', () => {
-    if (!isAuthenticated) {
-      const password = prompt('🔒 Enter admin password:');
+  // Secret keyboard shortcut to unlock admin: Ctrl + Shift + L (Lowkey)
+  document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.shiftKey && e.key === 'L') {
+      const password = prompt('🔒 Admin Setup: Enter password to enable admin features on this device:');
       if (password === ADMIN_PASSWORD) {
-        isAuthenticated = true;
-        sessionStorage.setItem('adminAuth', 'true');
+        localStorage.setItem('admin_verified', 'true');
+        alert('✅ Device verified! Admin button is now visible.');
+        if (adminBtn) adminBtn.style.display = 'block';
       } else if (password !== null) {
-        alert('❌ Wrong password!');
-        return;
-      } else {
-        return; // User cancelled
+        alert('❌ Wrong password');
       }
     }
+  });
+
+  // Open admin panel
+  adminBtn?.addEventListener('click', () => {
     adminModal.classList.add('active');
     populateEditList();
   });

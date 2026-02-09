@@ -965,6 +965,8 @@ section {
    ======================================== */
 
 .admin-btn {
+  display: none;
+  /* Hidden by default - only for verified admin */
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-md);
