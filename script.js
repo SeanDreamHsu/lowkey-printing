@@ -2,14 +2,8 @@
 // TEEN DESIGN - Interactive Features
 // ========================================
 
-// Product data stored in localStorage
-let products = JSON.parse(localStorage.getItem('lowkeyProducts')) || [
-  { id: 1, name: 'Gaming Controller Stand', desc: 'Keep your controllers organized in style', price: 12, emoji: '🎮', image: '', badge: 'popular' },
-  { id: 2, name: 'Articulated Dragon', desc: 'Fully movable joints, multiple colors', price: 18, emoji: '🐉', image: '', badge: 'new' },
-  { id: 3, name: 'Phone Stand', desc: 'Adjustable angle, fits all phones', price: 8, emoji: '📱', image: '', badge: '' },
-  { id: 4, name: 'Pencil Holder', desc: 'Geometric design, desk essential', price: 6, emoji: '🎨', image: '', badge: '' },
-  { id: 5, name: 'Custom Keychain', desc: 'Personalized with your name or design', price: 5, emoji: '🔑', image: '', badge: '' }
-];
+// Product data - Fetched from API
+let products = [];
 
 let editingProductId = null;
 
@@ -20,9 +14,35 @@ document.addEventListener('DOMContentLoaded', () => {
   initNavbarScroll();
   initScrollAnimations();
   initAdminPanel();
-  renderProducts();
+  fetchProducts(); // Fetch from Cloud
   initMagicBento();
 });
+
+async function fetchProducts() {
+  try {
+    const response = await fetch('/api/products');
+    if (response.ok) {
+      products = await response.json();
+      // Fallback for empty database
+      if (products.length === 0) {
+        products = [
+          { id: 1, name: 'Gaming Controller Stand', desc: 'Keep your controllers organized in style', price: 12, emoji: '🎮', image: '', badge: 'popular' },
+          { id: 2, name: 'Articulated Dragon', desc: 'Fully movable joints, multiple colors', price: 18, emoji: '🐉', image: '', badge: 'new' },
+          { id: 3, name: 'Phone Stand', desc: 'Adjustable angle, fits all phones', price: 8, emoji: '📱', image: '', badge: '' },
+          { id: 4, name: 'Pencil Holder', desc: 'Geometric design, desk essential', price: 6, emoji: '🎨', image: '', badge: '' },
+          { id: 5, name: 'Custom Keychain', desc: 'Personalized with your name or design', price: 5, emoji: '🔑', image: '', badge: '' }
+        ];
+        // Save defaults to cloud
+        saveProducts();
+      }
+    }
+  } catch (error) {
+    console.error('Failed to fetch products:', error);
+    // Fallback to localStorage if offline
+    products = JSON.parse(localStorage.getItem('lowkeyProducts')) || [];
+  }
+  renderProducts();
+}
 
 // ========================================
 // Render Products from Data
@@ -105,8 +125,20 @@ function renderProducts() {
   saveProducts();
 }
 
-function saveProducts() {
+async function saveProducts() {
+  // Always save to local as backup/cache
   localStorage.setItem('lowkeyProducts', JSON.stringify(products));
+
+  // Save to Cloud
+  try {
+    await fetch('/api/products', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(products)
+    });
+  } catch (error) {
+    console.error('Failed to save to cloud:', error);
+  }
 }
 
 // ========================================
