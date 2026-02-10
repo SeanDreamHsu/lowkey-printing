@@ -956,6 +956,22 @@ section {
   color: var(--text-muted);
 }
 
+.footer-contact {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+.footer-contact a {
+  color: #5865F2;
+  font-weight: 600;
+  transition: color var(--transition-fast);
+}
+
+.footer-contact a:hover {
+  color: #7289da;
+  text-decoration: underline;
+}
+
 /* ========================================
    MOBILE RESPONSIVE
    ======================================== */
